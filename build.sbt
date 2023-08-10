@@ -1,28 +1,28 @@
 lazy val versions = new {
-  val scalaTest = "3.2.9"
-  val scalaTestScalaCheck = "3.2.9.0"
-  val cats = "2.7.0"
-  val catsEffect = "3.3.4"
-  val catsMtl = "1.2.1"
-  val sourcecode = "0.2.7"
-  val monix = "3.4.0"
+  val scalaTest = "3.2.11"
+  val scalaTestScalaCheck = "3.2.11.0"
+  val cats = "2.9.0"
+  val catsEffect = "3.5.1"
+  val catsMtl = "1.3.1"
+  val sourcecode = "0.3.0"
+  val monix = "3.4.1"
   val magnoliaScala2 = "0.17.0"
   val magnoliaScala3 = "2.0.0-M4"
   val scalaCheck = "1.15.4"
   val zio = "1.0.9"
   val zioCats = "3.1.1.0"
-  val slf4j = "1.7.33"
-  val log4j = "2.17.0"
+  val slf4j = "1.7.36"
+  val log4j = "2.20.0"
   val disruptor = "3.4.4"
-  val scribe = "3.5.5"
-  val perfolation = "1.2.8"
-  val jsoniter = "2.12.1"
+  val scribe = "3.11.9"
+  val perfolation = "1.2.9"
+  val jsoniter = "2.23.2"
 }
 
 lazy val onlyScala2 = Option(System.getenv("ONLY_SCALA_2")).contains("true")
 lazy val onlyScala3 = Option(System.getenv("ONLY_SCALA_3")).contains("true")
-lazy val scala3 = if (onlyScala2) List() else List("3.1.0")
-lazy val scala2 = if (onlyScala3) List() else List("2.13.8", "2.12.15")
+lazy val scala3 = if (onlyScala2) List() else List("3.3.0")
+lazy val scala2 = if (onlyScala3) List() else List("2.13.11", "2.12.18")
 lazy val scalaVersions = scala2 ::: scala3
 
 lazy val scalaTest = "org.scalatest" %% "scalatest" % versions.scalaTest % Test
@@ -75,7 +75,7 @@ lazy val noPublish = Seq(
 )
 
 lazy val sharedSettings = Seq(
-  scalaVersion := "2.13.8",
+  scalaVersion := "2.13.11",
   organization := "com.github.valskalla",
   libraryDependencies ++= scalaTestScalaCheck :: scalaCheck :: scalaTest :: Nil,
   crossScalaVersions := scalaVersions,
@@ -261,7 +261,6 @@ lazy val scalac212Options = Seq(
   "-Ywarn-unused:patvars", // Warn if a variable bound in a pattern is unused.
   "-Ywarn-unused:privates" // Warn if a private member is unused.
 )
-
 
 lazy val scalac213Options = Seq(
   "-Werror",

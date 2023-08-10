@@ -35,7 +35,7 @@ package object zio {
       .fromEffect(ZIO.runtime[Clock & CBlocking].map(rt => asyncRuntimeInstance(rt)))
       .flatMap { implicit F =>
         ZManaged.fromEffect {
-          Dispatcher[Task].use { implicit dispatcher =>
+          Dispatcher.parallel[Task].use { implicit dispatcher =>
             Task(io.odin.fileLogger[Task](fileName, formatter, minLevel).toManaged)
           }
         }
@@ -58,7 +58,7 @@ package object zio {
       .fromEffect(ZIO.runtime[Clock & CBlocking].map(rt => asyncRuntimeInstance(rt)))
       .flatMap { implicit F =>
         ZManaged.fromEffect {
-          Dispatcher[Task].use { implicit dispatcher =>
+          Dispatcher.parallel[Task].use { implicit dispatcher =>
             Task(io.odin.asyncFileLogger[Task](fileName, formatter, timeWindow, maxBufferSize, minLevel).toManaged)
           }
         }
