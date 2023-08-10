@@ -735,7 +735,7 @@ import io.odin.slf4j.OdinLoggerBinder
 class ExternalLogger extends OdinLoggerBinder[IO] {
 
   implicit val F: Sync[IO] = IO.asyncForIO
-  implicit val dispatcher: Dispatcher[IO] = Dispatcher[IO].allocated.unsafeRunSync()._1
+  implicit val dispatcher: Dispatcher[IO] = Dispatcher.parallel[IO].allocated.unsafeRunSync()._1
     
   val loggers: PartialFunction[String, Logger[IO]] = {
     case "some.external.package.SpecificClass" =>
