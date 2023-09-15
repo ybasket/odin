@@ -1,7 +1,7 @@
 lazy val versions = new {
   val scalaTest = "3.2.11"
   val scalaTestScalaCheck = "3.2.11.0"
-  val cats = "2.9.0"
+  val cats = "2.10.0"
   val catsEffect = "3.5.1"
   val catsMtl = "1.3.1"
   val sourcecode = "0.3.0"
@@ -14,9 +14,9 @@ lazy val versions = new {
   val slf4j = "1.7.36"
   val log4j = "2.20.0"
   val disruptor = "3.4.4"
-  val scribe = "3.11.9"
+  val scribe = "3.12.2"
   val perfolation = "1.2.9"
-  val jsoniter = "2.23.2"
+  val jsoniter = "2.23.4"
 }
 
 lazy val scalaVersions = List("2.13.12", "2.12.18", "3.3.1")
@@ -71,7 +71,7 @@ lazy val noPublish = Seq(
 )
 
 lazy val sharedSettings = Seq(
-  scalaVersion := "2.13.11",
+  scalaVersion := scalaVersions.head,
   organization := "com.github.valskalla",
   libraryDependencies ++= scalaTestScalaCheck :: scalaCheck :: scalaTest :: Nil,
   crossScalaVersions := scalaVersions,
