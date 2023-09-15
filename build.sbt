@@ -15,7 +15,6 @@ lazy val versions = new {
   val log4j = "2.20.0"
   val disruptor = "3.4.4"
   val scribe = "3.12.2"
-  val perfolation = "1.2.9"
   val jsoniter = "2.23.4"
 }
 
@@ -46,8 +45,6 @@ lazy val monix = "io.monix" %% "monix" % versions.monix
 
 lazy val magnoliaScala2 = "com.propensive" %% "magnolia" % versions.magnoliaScala2
 lazy val magnoliaScala3 = "com.softwaremill.magnolia" %% "magnolia-core" % versions.magnoliaScala3
-
-lazy val perfolation = "com.outr" %% "perfolation" % versions.perfolation
 
 lazy val slf4j = "org.slf4j" % "slf4j-api" % versions.slf4j
 
@@ -114,7 +111,7 @@ lazy val sharedSettings = Seq(
 lazy val `odin-core` = (project in file("core"))
   .settings(sharedSettings)
   .settings(
-    libraryDependencies ++= (catsEffect % Test) :: catsMtl :: sourcecode :: perfolation :: catsEffectStd :: alleycats :: cats
+    libraryDependencies ++= (catsEffect % Test) :: catsMtl :: sourcecode :: catsEffectStd :: alleycats :: cats
   )
 
 lazy val `odin-json` = (project in file("json"))

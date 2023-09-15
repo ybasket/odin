@@ -4,8 +4,10 @@ import cats.syntax.show._
 import io.odin.LoggerMessage
 import io.odin.formatter.options.{PositionFormat, ThrowableFormat}
 import io.odin.meta.Position
-import perfolation._
 
+import java.time.{Instant, ZoneId, ZonedDateTime}
+import java.time.format.{DateTimeFormatter, DateTimeFormatterBuilder}
+import java.time.temporal.ChronoField
 import scala.annotation.tailrec
 
 trait Formatter {
@@ -13,6 +15,13 @@ trait Formatter {
 }
 
 object Formatter {
+  private val timestampFormatter: DateTimeFormatter = new DateTimeFormatterBuilder()
+    .append(DateTimeFormatter.ISO_LOCAL_DATE)
+    .appendLiteral('T')
+    .append(DateTimeFormatter.ISO_LOCAL_TIME)
+    .appendLiteral(",")
+    .appendValue(ChronoField.MILLI_OF_SECOND, 3)
+    .toFormatter()
 
   val default: Formatter =
     Formatter.create(ThrowableFormat.Default, PositionFormat.Full, colorful = false, printCtx = true)
@@ -97,10 +106,8 @@ object Formatter {
   /**
     * Formats timestamp using the following format: yyyy-MM-ddTHH:mm:ss,SSS
     */
-  def formatTimestamp(timestamp: Long): String = {
-    val date = timestamp.t
-    s"${date.F}T${date.T},${date.milliOfSecond}"
-  }
+  def formatTimestamp(timestamp: Long): String =
+    timestampFormatter.format(ZonedDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault()))
 
   /**
     * The result differs depending on the format:
