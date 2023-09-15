@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        java: ['temurin:8', 'temurin:11', 'temurin:17']
+        java: ['temurin:11', 'temurin:17']
 
     runs-on: ${{ matrix.os }}
 

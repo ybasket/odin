@@ -19,7 +19,7 @@ lazy val versions = new {
   val jsoniter = "2.23.2"
 }
 
-lazy val scalaVersions = List("2.13.11", "2.12.18", "3.3.0")
+lazy val scalaVersions = List("2.13.12", "2.12.18", "3.3.1")
 
 lazy val scalaTest = "org.scalatest" %% "scalatest" % versions.scalaTest % Test
 lazy val scalaTestScalaCheck = "org.scalatestplus" %% "scalacheck-1-15" % versions.scalaTestScalaCheck % Test
