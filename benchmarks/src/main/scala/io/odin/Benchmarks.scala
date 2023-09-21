@@ -3,11 +3,10 @@ package io.odin
 import java.nio.file.{Files, Paths}
 import java.util.UUID
 import java.util.concurrent.TimeUnit
-
 import cats.Eval
 import cats.effect.IO
 import cats.effect.unsafe.IORuntime
-import cats.syntax.traverse._
+import cats.syntax.all._
 import io.odin
 import io.odin.loggers.DefaultLogger
 import io.odin.syntax._
@@ -17,6 +16,7 @@ import io.odin.json.{Formatter => JsonFormatter}
 import io.odin.meta.Position
 import org.openjdk.jmh.annotations._
 import org.apache.logging.log4j.LogManager
+import org.openjdk.jmh.infra.Blackhole
 import scribe.mdc.MDC
 import scribe.file._
 import scribe.{Logger => ScribeLogger}
@@ -82,17 +82,17 @@ class FileLoggerBenchmarks extends OdinBenchmarks {
   @Benchmark
   @OperationsPerInvocation(1000)
   def msg(): Unit =
-    (1 to 1000).toList.traverse(_ => logger.info(message)).unsafeRunSync()
+    (1 to 1000).toList.traverse_(_ => logger.info(message)).unsafeRunSync()
 
   @Benchmark
   @OperationsPerInvocation(1000)
   def msgAndCtx(): Unit =
-    (1 to 1000).toList.traverse(_ => logger.info(message, context)).unsafeRunSync()
+    (1 to 1000).toList.traverse_(_ => logger.info(message, context)).unsafeRunSync()
 
   @Benchmark
   @OperationsPerInvocation(1000)
   def msgCtxThrowable(): Unit =
-    (1 to 1000).toList.traverse(_ => logger.info(message, context, throwable)).unsafeRunSync()
+    (1 to 1000).toList.traverse_(_ => logger.info(message, context, throwable)).unsafeRunSync()
 
   @TearDown
   def tearDown(): Unit = {
@@ -182,17 +182,17 @@ class AsyncLoggerBenchmark extends OdinBenchmarks {
 
   @Benchmark
   @OperationsPerInvocation(1000)
-  def msg(): Unit = (1 to 1000).toList.traverse(_ => asyncLogger.info(message)).unsafeRunSync()
+  def msg(): Unit = (1 to 1000).toList.traverse_(_ => asyncLogger.info(message)).unsafeRunSync()
 
   @Benchmark
   @OperationsPerInvocation(1000)
   def msgAndCtx(): Unit =
-    (1 to 1000).toList.traverse(_ => asyncLogger.info(message, context)).unsafeRunSync()
+    (1 to 1000).toList.traverse_(_ => asyncLogger.info(message, context)).unsafeRunSync()
 
   @Benchmark
   @OperationsPerInvocation(1000)
   def msgCtxThrowable(): Unit =
-    (1 to 1000).toList.traverse(_ => asyncLogger.info(message, context, throwable)).unsafeRunSync()
+    (1 to 1000).toList.traverse_(_ => asyncLogger.info(message, context, throwable)).unsafeRunSync()
 
   @TearDown
   def tearDown(): Unit = {
@@ -239,37 +239,37 @@ class FormatterBenchmarks extends OdinBenchmarks {
   )
 
   @Benchmark
-  def defaultFormatter(): Unit = Formatter.default.format(loggerMessage)
+  def defaultFormatter(hole: Blackhole): Unit = hole.consume(Formatter.default.format(loggerMessage))
 
   @Benchmark
-  def defaultColorful(): Unit = Formatter.colorful.format(loggerMessage)
+  def defaultColorful(hole: Blackhole): Unit = hole.consume(Formatter.colorful.format(loggerMessage))
 
   @Benchmark
-  def defaultFormatterNoCtx(): Unit = Formatter.default.format(noCtx)
+  def defaultFormatterNoCtx(hole: Blackhole): Unit = hole.consume(Formatter.default.format(noCtx))
 
   @Benchmark
-  def defaultFormatterNoCtxThrowable(): Unit = Formatter.default.format(noThrowable)
+  def defaultFormatterNoCtxThrowable(hole: Blackhole): Unit = hole.consume(Formatter.default.format(noThrowable))
 
   @Benchmark
-  def jsonFormatter(): Unit = JsonFormatter.json.format(loggerMessage)
+  def jsonFormatter(hole: Blackhole): Unit = hole.consume(JsonFormatter.json.format(loggerMessage))
 
   @Benchmark
-  def depthFormatter(): Unit = formatterDepth.format(loggerMessage)
+  def depthFormatter(hole: Blackhole): Unit = hole.consume(formatterDepth.format(loggerMessage))
 
   @Benchmark
-  def depthIndentFormatter(): Unit = formatterDepthIndent.format(loggerMessage)
+  def depthIndentFormatter(hole: Blackhole): Unit = hole.consume(formatterDepthIndent.format(loggerMessage))
 
   @Benchmark
-  def depthIndentFilterFormatter(): Unit = formatterDepthIndentFilter.format(loggerMessage)
+  def depthIndentFilterFormatter(hole: Blackhole): Unit = hole.consume(formatterDepthIndentFilter.format(loggerMessage))
 
   @Benchmark
-  def abbreviatedPositionFormatter(): Unit = abbreviated.format(loggerMessage)
+  def abbreviatedPositionFormatter(hole: Blackhole): Unit = hole.consume(abbreviated.format(loggerMessage))
 
 }
 
 @State(Scope.Benchmark)
 class PositionBenchmark extends OdinBenchmarks {
   @Benchmark
-  def resolve(): Unit = implicitly[Position].enclosureName
+  def resolve(hole: Blackhole): Unit = hole.consume(implicitly[Position].enclosureName)
 }
 // $COVERAGE-ON$
