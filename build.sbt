@@ -1,3 +1,5 @@
+import org.typelevel.scalacoptions.ScalacOptions
+
 lazy val versions = new {
   val scalaTest = "3.2.11"
   val scalaTestScalaCheck = "3.2.11.0"
@@ -99,7 +101,9 @@ lazy val sharedSettings = Seq(
         compilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
       )
     case _ => Nil
-  })
+  }),
+  // Avoid compiler warnings due to scalatest DSL
+  Test / tpolecatExcludeOptions += ScalacOptions.warnNonUnitStatement
 )
 
 lazy val `odin-core` = (project in file("core"))
