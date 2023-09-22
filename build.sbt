@@ -177,7 +177,8 @@ lazy val docs = (project in file("odin-docs"))
       "VERSION" -> version.value
     ),
     mdocOut := file("."),
-    libraryDependencies += catsEffect
+    libraryDependencies += catsEffect,
+    tpolecatExcludeOptions += ScalacOptions.warnNonUnitStatement
   )
   .dependsOn(`odin-core`, `odin-json`, `odin-zio`, /*`odin-monix`,*/ `odin-slf4j`, `odin-extras`)
   .enablePlugins(MdocPlugin)
