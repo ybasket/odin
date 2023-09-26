@@ -1,3 +1,7 @@
+**Note: This is a fork of https://github.com/valskalla/odin as the original repository is currently unmaintained. The goal is to develop further in this fork and eventually merge back upstream.**
+
+Below is the original readme:
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/valskalla/odin/master/logo.png" width="500px" />  
   <br/>
@@ -5,7 +9,7 @@
 </p>
 
 ----
-[![Build Status](https://img.shields.io/github/workflow/status/valskalla/odin/Scala%20CI)](https://github.com/valskalla/odin/actions)
+[![Build](https://github.com/ybasket/odin/actions/workflows/scala.yml/badge.svg)](https://github.com/ybasket/odin/actions/workflows/scala.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.valskalla/odin-core_2.13)](https://search.maven.org/search?q=g:com.github.valskalla%20AND%20a:odin-*)
 [![Codecov](https://img.shields.io/codecov/c/github/valskalla/odin)](https://codecov.io/gh/valskalla/odin)
 [![License](https://img.shields.io/github/license/valskalla/odin)](https://github.com/valskalla/odin/blob/master/LICENSE)
